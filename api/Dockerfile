@@ -1,8 +1,13 @@
-FROM node:latest
+FROM node:alpine
+# Add a work directory
 WORKDIR /app
-COPY package*.json ./
+# Cache and Install dependencies
+COPY package.json .
+COPY yarn.lock .
 RUN yarn install
+# Copy app files
 COPY . .
-RUN yarn run build
+RUN yarn build
+# Expose port
 EXPOSE 3000
-CMD ["yarn","start"]
+CMD [ "yarn", "start" ]
